@@ -111,11 +111,6 @@ void VisualizerApp::setApp(QApplication* app)
 
 bool VisualizerApp::init(int argc, char** argv)
 {
-  ROS_INFO("rviz version %s", get_version().c_str());
-  ROS_INFO("compiled against Qt version " QT_VERSION_STR);
-  ROS_INFO("compiled against OGRE version %d.%d.%d%s (%s)", OGRE_VERSION_MAJOR, OGRE_VERSION_MINOR,
-           OGRE_VERSION_PATCH, OGRE_VERSION_SUFFIX, OGRE_VERSION_NAME);
-
 #ifdef Q_OS_MAC
   ProcessSerialNumber PSN;
   GetCurrentProcess(&PSN);
@@ -129,6 +124,12 @@ bool VisualizerApp::init(int argc, char** argv)
 #endif
     ros::init(argc, argv, "rviz", ros::init_options::AnonymousName);
 
+    ROS_INFO("rviz version %s", get_version().c_str());
+    ROS_INFO("custom version build on %s", __DATE__);
+    ROS_INFO("compiled against Qt version " QT_VERSION_STR);
+    ROS_INFO("compiled against OGRE version %d.%d.%d%s (%s)", OGRE_VERSION_MAJOR, OGRE_VERSION_MINOR,
+             OGRE_VERSION_PATCH, OGRE_VERSION_SUFFIX, OGRE_VERSION_NAME);
+    
     startContinueChecker();
 
     std::string display_config, fixed_frame, splash_path, help_path;
