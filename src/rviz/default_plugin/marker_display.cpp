@@ -64,6 +64,13 @@ MarkerDisplay::MarkerDisplay() : Display(), tf_filter_(nullptr)
                       this, SLOT(updateQueueSize()));
   queue_size_property_->setMin(0);
 
+  unreliable_subscriber_property_ =
+      new BoolProperty("Unreliable subscriber", true,
+                      "Advanced: sets the subscriber to be unreliable, thus using UDP for subscribing to the topic",
+                      this, SLOT(updateUnreliable()));
+
+
+
   namespaces_category_ = new Property("Namespaces", QVariant(), "", this);
 }
 
@@ -134,6 +141,11 @@ void MarkerDisplay::updateQueueSize()
   subscribe();
 }
 
+void MarkerDisplay::updateUnreliable()
+{
+  updateTopic();
+}
+
 void MarkerDisplay::updateTopic()
 {
   onDisable();
@@ -155,6 +167,10 @@ void MarkerDisplay::subscribe()
 
     try
     {
+      ros::TransportHints hints = ros::TransportHints().reliable();
+      if (unreliable_subscriber_property_->getBool())
+        hints = ros::TransportHints().unreliable();
+
       sub_.subscribe(update_nh_, marker_topic, queue_size_property_->getInt());
       array_sub_ = update_nh_.subscribe(marker_topic + "_array", queue_size_property_->getInt(),
                                         &MarkerDisplay::incomingMarkerArray, this);

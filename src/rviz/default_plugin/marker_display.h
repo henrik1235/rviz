@@ -114,9 +114,11 @@ protected:
 
   RosTopicProperty* marker_topic_property_;
   IntProperty* queue_size_property_;
+  BoolProperty* unreliable_subscriber_property_;
 
 private Q_SLOTS:
   void updateQueueSize();
+  void updateUnreliable();
   void updateTopic();
 
 private:
