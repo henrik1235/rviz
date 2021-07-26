@@ -35,6 +35,7 @@
 #include <QCloseEvent>
 
 #include <rviz/panel_dock_widget.h>
+#include <rviz/load_resource.h>
 
 namespace rviz
 {
@@ -50,7 +51,7 @@ PanelDockWidget::PanelDockWidget(const QString& name)
   title_bar->setContentsMargins(0, 0, 0, 0);
 
   QToolButton* close_button = new QToolButton();
-  close_button->setIcon(QIcon::fromTheme("window-close"));
+  close_button->setIcon(loadPixmap("package://rviz/icons/close.png"));
   close_button->setIconSize(QSize(10, 10));
 
   connect(close_button, SIGNAL(clicked()), this, SLOT(close()));
