@@ -15,6 +15,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Define global caktin_lint suppressions
 #catkin_lint: ignore uninstalled_script missing_install_target
 
+# Silence boost warning
+add_compile_definitions(BOOST_BIND_GLOBAL_PLACEHOLDERS)
+
 find_package(Boost REQUIRED
   COMPONENTS
   filesystem
